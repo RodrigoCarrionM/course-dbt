@@ -1,0 +1,90 @@
+version: 2
+
+models:
+ - name: stg_postgres__products
+   description: This is a dictionary of products
+   columns:
+    - name: product_id
+      description: This is a primary key, and it connects to events and order_items
+    - name: product_name
+    - name: price
+    - name: inventory
+
+ - name: stg_postgres__promos
+   description: This is a dictionary of promotions
+   columns:
+    - name: promo_id
+      description: This is a primary key, and it connects to orders
+    - name: discount
+    - name: promo_status
+
+ - name: stg_postgres__order_items
+   description: This is a dictionary of order items
+   columns:
+    - name: order_id
+      description: This is a primary key, and it connects to orders
+    - name: product_id
+      description: This is a secondary key, and it connects to products
+    - name: quantity
+
+ - name: stg_postgres__orders
+   description: This is a dictionary of orders
+   columns:
+    - name: order_id
+      description: This is a primary key, and it connects to orders
+    - name: promo_id
+      description: This is a secondary key, and it connects to promos
+    - name: user_id
+      description: This is a secondary key, and it connects to users
+    - name: address_id
+      description: This is a secondary key, and it connects to addresses
+    - name: created_at
+    - name: order_cost
+    - name: shipping_cost
+    - name: order_total
+    - name: tracking_id
+    - name: shipping_service
+    - name: estimated_delivery_at
+    - name: delivered_at
+    - name: order_status
+
+ - name: stg_postgres__addresses
+   description: This is a dictionary of addresses
+   columns:
+    - name: address_id
+      description: This is a primary key, and it connects to users and orders
+    - name: address 
+    - name: zipcode
+    - name: state
+    - name: country
+
+ - name: stg_postgres__users
+   description: This is a dictionary of users
+   columns:
+    - name: user_id
+      description: This is a primary key, and it connects to events and orders
+    - name: first_name
+    - name: last_name
+    - name: email
+    - name: phone_number
+    - name: created_at
+    - name: updated_at
+    - name: address_id 
+
+ - name: stg_postgres__events
+   description: This is a dictionary of events
+   columns:
+    - name: event_id
+      description: This is a primary key
+    - name: session_id
+    - name: user_id
+      description: This is a secondary key, and it connects to users
+    - name: event_type
+    - name: page_url
+    - name: created_at
+    - name: order_id
+      description: This is a primary key, and it connects to orders
+    - name: product_id
+      description: This is a primary key, and it connects to products
+
+   
