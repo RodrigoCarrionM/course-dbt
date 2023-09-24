@@ -6,6 +6,9 @@ models:
    columns:
     - name: product_id
       description: This is a primary key, and it connects to events and order_items
+      tests:
+        - not_null
+        - unique
     - name: product_name
     - name: price
     - name: inventory
@@ -15,6 +18,9 @@ models:
    columns:
     - name: promo_id
       description: This is a primary key, and it connects to orders
+      tests:
+        - not_null
+        - unique
     - name: discount
     - name: promo_status
 
@@ -23,6 +29,9 @@ models:
    columns:
     - name: order_id
       description: This is a primary key, and it connects to orders
+      tests:
+        - not_null
+        
     - name: product_id
       description: This is a secondary key, and it connects to products
     - name: quantity
@@ -32,6 +41,9 @@ models:
    columns:
     - name: order_id
       description: This is a primary key, and it connects to orders
+      tests:
+        - not_null
+        - unique
     - name: promo_id
       description: This is a secondary key, and it connects to promos
     - name: user_id
@@ -53,8 +65,13 @@ models:
    columns:
     - name: address_id
       description: This is a primary key, and it connects to users and orders
+      tests:
+        - not_null
+        - unique
     - name: address 
     - name: zipcode
+      tests: 
+        - not_null
     - name: state
     - name: country
 
@@ -63,6 +80,9 @@ models:
    columns:
     - name: user_id
       description: This is a primary key, and it connects to events and orders
+      tests:
+        - not_null
+        - unique
     - name: first_name
     - name: last_name
     - name: email
@@ -76,10 +96,24 @@ models:
    columns:
     - name: event_id
       description: This is a primary key
+      tests:
+        - not_null
+        - unique
     - name: session_id
     - name: user_id
+      tests:
+        - relationships:
+            to: ref('stg_postgres__users')
+            field: user_id
       description: This is a secondary key, and it connects to users
     - name: event_type
+      tests:
+        - accepted_values:
+            values: 
+              - checkout
+              - package_shipped
+              - add_to_cart
+              - page_view
     - name: page_url
     - name: created_at
     - name: order_id
